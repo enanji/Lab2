@@ -1,10 +1,8 @@
 pipeline {
     agent { label 'java' }
-
-    triggers {
+triggers {
     pollSCM('H/2 * * * *')
 }
-
     stages {
         stage('Git Clone') {
             steps {
@@ -15,19 +13,18 @@ pipeline {
 
         stage('Run Kubernetes Manifests') {
             steps {
+                sh "kubectl get pods"
+		        sh "kubectl get rs"
+		        sh "kubectl get deployment"
                 echo "Applying Kubernetes YAML files..."
                 sh '''
-                  kubectl apply -f deployment.yaml
-                  kubectl apply -f service.yaml
-                  kubectl get deployment
-                  kubectl get pods
-                  kubectl get rs
+                  kubectl apply -f .
                 '''
             }
         }
         stage('verification') {
             steps {
-                sh "curl 192.168.49.2:30303"
+                sh "curl 192.168.49.2:30110"
             }
         }
     }
