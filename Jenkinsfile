@@ -16,6 +16,13 @@ triggers {
         sh "docker ps -a"
       }
     }
+    stage('Build Docker Image') {
+      steps {
+        sh '''
+          docker build -t mbahafru/py-feb26:$BUILD_NUMBER python-sample-code
+        '''
+      }
+    }
 
         stage('Run Kubernetes Manifests') {
             steps {
