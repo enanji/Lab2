@@ -55,7 +55,7 @@ triggers {
                 sh "kubectl get pods"
 		        sh "kubectl get rs"
 		        sh "kubectl get deployment"
-                sh "kubectl describe pods  | grep Image
+                sh "kubectl describe pods  | grep Image"
                 
             }
         }
